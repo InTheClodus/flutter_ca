@@ -21,26 +21,39 @@ class MyPainter extends CustomPainter {
     double eHeight = size.height / 25;
 
     //網格背景
-    var paint = Paint()
+    var paint1 = Paint()
       ..isAntiAlias = true
       ..style = PaintingStyle.fill //填充
       ..color = Color(0xfff6f6f6); //背景为纸黄色
-    canvas.drawRect(Offset.zero & size, paint);
+    canvas.drawRect(Offset.zero & size, paint1);
 
     //網格風格
-    paint
+    paint1
+      ..style = PaintingStyle.stroke //线
+      ..color = Color(0xffe1e9f0)
+      ..strokeWidth = 1.3;
+
+    //網格背景
+    var paint2 = Paint()
+      ..isAntiAlias = true
+      ..style = PaintingStyle.fill //填充
+      ..color = Color(0xfff6f6f6); //背景为纸黄色
+    canvas.drawRect(Offset.zero & size, paint2);
+
+    //網格風格
+    paint2
       ..style = PaintingStyle.stroke //线
       ..color = Color(0xffe1e9f0)
       ..strokeWidth = 1.1;
 
     for (int i = 0; i <= 40; ++i) {
       double dy = eHeight * i;
-      canvas.drawLine(Offset(0, dy), Offset(size.width, dy), paint);
+      canvas.drawLine(Offset(0, dy), Offset(size.width, dy), paint1);
     }
 
     for (int i = 0; i <= 20; ++i) {
       double dx = eWidth * i;
-      canvas.drawLine(Offset(dx, 0), Offset(dx, size.height), paint);
+      canvas.drawLine(Offset(dx, 0), Offset(dx, size.height), paint2);
     }
 
 

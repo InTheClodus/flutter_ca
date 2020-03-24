@@ -1,7 +1,9 @@
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ca/GoCustomPainterWidget.dart';
 
+import 'GradientCircularProgressRoute.dart';
 import 'config.dart';
 
 class MyApp extends StatelessWidget {
@@ -30,6 +32,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
@@ -37,28 +41,51 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(
         children: <Widget>[
           CustomPaintRoute(),
-          new Center(
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Text(
-                  'Hello',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline,
+          Container(
+            height: 280,
+            width: 280,
+            color: Colors.transparent,
+            child: Stack(children: <Widget>[
+              RotatedBox(
+                quarterTurns: 1, //旋转90度(1/4圈)
+                child: GradientCircularProgressRoute(),
+              ),
+              Container(
+                padding: EdgeInsets.only(bottom: 50, left: 90, top: 30),
+                child: Icon(
+                  Icons.check,
+                  color: Color(0xffffc82c),
+                  size: 160,
                 ),
-                new Text(Config.helloMessage,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .display1,
-                ),
-                Config.helloIcon,
-              ],
+              ),
+            ]),
+          ),
+          new Text(Config.helloMessage,
+            style: Theme
+                .of(context)
+                .textTheme
+                .display1,
+          ),
+
+        ],
+      ),
+      drawer: Container(
+        width: width*0.7,
+        height: height,
+        color: Colors.transparent,
+        child: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0,sigmaY: 5.0),
+            child: Opacity(//设置透明度
+              opacity: 0.8,//半透明
+              child: Container(
+                width: width*0.8,
+                height: height,
+                decoration: BoxDecoration(color: Colors.white),
+              ),
             ),
           ),
-        ],
+        )
       )
     );
   }
